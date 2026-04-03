@@ -1,0 +1,6 @@
+firmware/.vscode
+hardware/.vscode
+software/__pycache__
+software/venv
+*.pyc
+*.log

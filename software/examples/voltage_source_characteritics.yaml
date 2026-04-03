@@ -1,0 +1,41 @@
+comment: ChA is connected to the positive-terminal of the voltage source. It's connected as a simple ammeter/voltmeter. ChB is connected to the base of a common-emmiter NPN that sinks the current of the power source
+
+caracs:
+  - name: V(I) characteritics
+    datafile: test.dat
+    init:
+        range: 0
+        voffset: 0
+        sampling: 10
+        channels:
+          - Name: a
+            control: nc
+          - Name: b
+            control: v
+            max_power: 0.5
+            initvalue: 0
+          - Name: c
+            control: nc
+    sweep:
+        channel: b
+        start: 0
+        stop: 10
+        step: 0.1
+        timestep: 0.1
+        option: symmetric
+    plots:
+      - name: Channel B voltage vs. time
+        x: t
+        xlabel: Time (s)
+        y: [vb]
+        ylabel: Vchb (V)
+      - name: Channel B current vs. time
+        x: t
+        xlabel: Time (s)
+        y: [ib]
+        ylabel: Ichb (mA)
+      - name: Power source I(V) characteritics
+        x: ia
+        xlabel: Output current (A)
+        y: [va]
+        ylabel: Output voltage (V)

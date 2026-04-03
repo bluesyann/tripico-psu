@@ -1,0 +1,53 @@
+comment: Gate on chA, drain on chB and source on chC
+#calibration_folder: /media/Bureau/Electronique/iv_calibrations
+
+caracs:
+  - name: N-FET
+    datafile: test.dat
+    init:
+        range: 1
+        voffset: 5
+        sampling: 10
+        channels:
+          - Name: a
+            control: v
+            max_power: 0.02
+            initvalue: 0
+          - Name: b
+            control: v
+            max_power: 0.2
+            initvalue: 0
+          - Name: c
+            control: v
+            max_power: 0.2
+            initvalue: 0
+    sweep:
+        channel: a
+        start: 2
+        stop: 4
+        step: 0.5
+        timestep: 1
+        sweep:
+            channel: b
+            start: -1
+            stop: 1
+            step: 0.1
+            timestep: 0.1
+            option: symmetric
+    plots:
+      - name: Gate-source voltage vs. time
+        x: t
+        xlabel: Time (s)
+        y: [va]
+        ylabel: Gate-source voltage (V)
+      - name: Drain-source voltage vs. time
+        x: t
+        xlabel: Time (s)
+        y: [vb]
+        ylabel: Drain-source voltage (V)
+      - name: Drain current vs drain-source voltage
+        x: vb
+        xlabel: Drain-source voltage (V)
+        y: [ib]
+        ylabel: Drain current (mA)
+        color: spa

@@ -1,0 +1,21 @@
+setup:
+    channels: [a,b,c]
+    device: /dev/ttyACM*
+    calibration_folder: /media/Bureau/Electronique/tripico-psu_calibrations
+    setpoint: 0
+    unit: v
+    max_power: 1
+gui:
+    sizex: 1000
+    sizey: 930
+    name: Multi-Channel Power Supply
+    foreground_channels_colors:
+        a: '#1014ff'
+        b: '#e01616'
+        c: '#006100'
+    background_channels_colors:
+        a: '#b8b8ce'
+        b: '#bba3a3'
+        c: '#abbeab'
+    sampling_frequency: 10
+    chart_duration: 30

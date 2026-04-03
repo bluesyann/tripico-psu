@@ -1,0 +1,53 @@
+comment: BJT NPN curve tracer - base on chA through a 10k resistor, emmiter on chB and collector on chC
+#calibration folder: /media/Bureau/Electronique/iv_calibrations
+
+caracs:
+  - name: BJT NPN
+    datafile: test.dat
+    init:
+        range: 1
+        voffset: 5
+        sampling: 10
+        channels:
+          - Name: a
+            control: i
+            max power: 0.02
+            initvalue: 0
+          - Name: b
+            control: v
+            max power: 0.2
+            initvalue: 0
+          - Name: c
+            control: v
+            max power: 0.2
+            initvalue: -1
+    sweep:
+        channel: a
+        start: 0
+        stop: 1
+        step: 0.2
+        timestep: 1
+        sweep:
+            channel: c
+            start: -3
+            stop: 3
+            step: 0.15
+            timestep: 0.1
+            option: symmetric
+    plots:
+      - name: Vbe vs. time
+        x: t
+        xlabel: Time (s)
+        y: [va]
+        ylabel: Vbe
+      - name: Vce vs. time
+        x: t
+        xlabel: Time (s)
+        y: [vc]
+        ylabel: Vce
+      - name: Ic vs. Vce
+        x: vc
+        xlabel: Vce (V)
+        y: [ic]
+        ylabel: Ic (mA)
+        color: spa
