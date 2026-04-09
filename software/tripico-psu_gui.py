@@ -117,7 +117,7 @@ class RealTimeGUI:
 
         self.fig = Figure(figsize=(10, 8))
         self.fig.subplots_adjust(
-            left=0.08, right=0.98, top=0.95, bottom=0.08, hspace=0.05
+            left=0.14, right=0.99, top=0.99, bottom=0.07, hspace=0.02
         )
 
         self.ax_voltage = self.fig.add_subplot(2, 1, 1)
@@ -282,14 +282,15 @@ class RealTimeGUI:
             if ch.get("unit") == "mA":
                 regulation = "i"
 
-            cmd = f"{ch['name']} {regulation}"
-            serfn.safe_write(self.ser, cmd)
+            if self.ser is not None:
+                cmd = f"{ch['name']} {regulation}"
+                serfn.safe_write(self.ser, cmd)
 
-            cmd = f"{ch['name']} {ch['setpoint']}"
-            serfn.safe_write(self.ser, cmd)
+                cmd = f"{ch['name']} {ch['setpoint']}"
+                serfn.safe_write(self.ser, cmd)
 
-            cmd = f"{ch['name']} {ch['max_power']}w"
-            serfn.safe_write(self.ser, cmd)
+                cmd = f"{ch['name']} {ch['max_power']}w"
+                serfn.safe_write(self.ser, cmd)
 
         except ValueError:
             logging.error("Invalid numeric values for Channel %s", ch.get("name", "?"))
@@ -343,7 +344,7 @@ class RealTimeGUI:
                     if "Saturation" in message:
                         color = "red"
                     self.root.after(
-                        0, self.channels[n]["StatusBox"].config(text=message, fg=color)
+                        0, self.channels[n]["status_box"].config(text=message, fg=color)
                     )
                 except Exception as e:
                     logging.error(f"Error parsing state: {e}")
@@ -352,7 +353,7 @@ class RealTimeGUI:
                     n = self.channel_names.index(ep[1])
                     message = " ".join(ep[3:])
                     self.root.after(
-                        0, self.channels[n]["StatusBox"].config(text=message, fg="red")
+                        0, self.channels[n]["status_box"].config(text=message, fg="red")
                     )
                 except Exception as e:
                     logging.error(f"Error parsing alert: {e}")
@@ -370,8 +371,9 @@ class RealTimeGUI:
                     logging.info(
                         f"Updating sampling frequency from {self.sampling_freq} to {f} Hz"
                     )
-                    serfn.safe_write(self.ser, f"set sampling {f}")
-                    self.sampling_freq = f
+                    if self.ser is not None:
+                        serfn.safe_write(self.ser, f"set sampling {f}")
+                        self.sampling_freq = f
 
             # Update the graph duration from the GUI if it has changed
             d = float(self.time_var.get())
@@ -440,7 +442,14 @@ class RealTimeGUI:
         self._running = False
         # Try to close serial port if open
         try:
-            serfn.close_serial_link(self.ser)
+            if self.ser is not None:
+                # Set channels to voltage regulation - setpoing 0
+                for ch in self.channels:
+                    cmd = f"{ch['name']} {config["setup"].get("unit", "v")}"
+                    serfn.safe_write(self.ser, cmd)
+                    cmd = f"{ch['name']} {config["setup"].get("setpoint", 0)}"
+                    serfn.safe_write(self.ser, cmd)
+                serfn.close_serial_link(self.ser)
         except Exception:
             pass
         try:
@@ -498,7 +507,7 @@ class RealTimeGUI:
                 if p > 100:
                     punit = "W"
                     p *= 1e-3
-                ch["IVPmonitor"].config(
+                ch["ivp_monitor"].config(
                     text=f"{i:.3f} mA @ {v:.2f} V  [ {p:.3f} {punit} ]"
                 )
         self.root.after(50, self.update_ivp_monitor)
@@ -638,6 +647,10 @@ class RealTimeGUI:
 
                 # Set the sampling frequency to 10 Hz
                 serfn.safe_write(self.ser, f"set sampling {self.sampling_freq}")
+
+                # Initialize channels
+                for ch in self.channels:
+                    self.update_channel(ch)
 
         except Exception as e:
             self.connection_status.config(text=f"Connection failed: {str(e)}", fg="red")

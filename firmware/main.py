@@ -514,7 +514,7 @@ async def safety_relays_control(channels: list) -> None:
             if ch.get("max_power") is not None and v is not None and i is not None:
                 if abs(i * v) > ch["max_power"]:
                     ch["safety_relay_on"] = False
-                    message = f"Max power reached: {i}mA x {v}V = {abs(i*v)}mW"
+                    message = f"Max power reached: {int(abs(i*v))} mW"
 
             if ch.get("safety_relay_on", False) != currently_on:
                 ch["safety_relay_pin"].value(1)
