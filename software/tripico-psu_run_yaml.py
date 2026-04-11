@@ -65,7 +65,7 @@ level = logging.INFO
 
 # File handler (as you have it)
 file_handler = RotatingFileHandler(
-    "tripicu-psu_run_yaml.log",
+    "tripico-psu_run_yaml.log",
     maxBytes=1 * 1024 * 1024,  # 1MB
     backupCount=1,
 )

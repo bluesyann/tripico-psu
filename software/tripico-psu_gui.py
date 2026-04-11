@@ -14,7 +14,7 @@ level = logging.INFO
 
 # File handler (as you have it)
 file_handler = RotatingFileHandler(
-    "tripicu-psu_gui.log",
+    "tripico-psu_gui.log",
     maxBytes=1 * 1024 * 1024,  # 1MB
     backupCount=1,
 )
@@ -35,7 +35,7 @@ class RealTimeGUI:
     def __init__(self):
         """Initialize the GUI application windows, widgets, and channels.
 
-        Loads configuration from `pispos_config.yaml`, creates plot areas,
+        Loads configuration from `tripico-psu_config.yaml`, creates plot areas,
         channel controls, and initial state for asynchronous polling.
         """
         self.root = tk.Tk()
@@ -444,10 +444,11 @@ class RealTimeGUI:
         try:
             if self.ser is not None:
                 # Set channels to voltage regulation - setpoing 0
+                setup_cfg = config.get("setup", {})
                 for ch in self.channels:
-                    cmd = f"{ch['name']} {config["setup"].get("unit", "v")}"
+                    cmd = f"{ch['name']} {setup_cfg.get('unit', 'v')}"
                     serfn.safe_write(self.ser, cmd)
-                    cmd = f"{ch['name']} {config["setup"].get("setpoint", 0)}"
+                    cmd = f"{ch['name']} {setup_cfg.get('setpoint', 0)}"
                     serfn.safe_write(self.ser, cmd)
                 serfn.close_serial_link(self.ser)
         except Exception:
@@ -463,13 +464,13 @@ class RealTimeGUI:
         Subsequent events will be parsed by update_events function
         """
         if self.ser is not None:
-            config = serfn.get_current_config(self.ser)
-            if not config["communicating"]:
+            board_state = serfn.get_current_config(self.ser)
+            if not board_state["communicating"]:
                 # Close the connection of no answer from the pico
                 self.ser = None
             else:
                 # Set the ammeter range and load the calibration
-                self.range = int(config["ammeter_range"])
+                self.range = int(board_state["ammeter_range"])
                 try:
                     calfn.load_calibration_files(
                         self.range, self.channels, self.calibpath
@@ -479,10 +480,11 @@ class RealTimeGUI:
                         f"Error getting the calibration for range {self.range}: {e}"
                     )
                 for ch in self.channels:
+                    state_key = f"{ch['name']}_pushpull_connected"
                     logging.debug(
-                        f"Checking channel {ch['name']} state: switch on {config[f"{ch['name']}_pushpull_connected"]}"
+                        f"Checking channel {ch['name']} state: switch on {board_state.get(state_key)}"
                     )
-                    if config[f"{ch['name']}_pushpull_connected"] == "True":
+                    if board_state.get(state_key) == "True":
                         self.root.after(
                             0, ch["status_box"].config(text=f"Regulating", fg="green")
                         )
@@ -510,7 +512,8 @@ class RealTimeGUI:
                 ch["ivp_monitor"].config(
                     text=f"{i:.3f} mA @ {v:.2f} V  [ {p:.3f} {punit} ]"
                 )
-        self.root.after(50, self.update_ivp_monitor)
+        if self._running:
+            self.root.after(50, self.update_ivp_monitor)
 
     def create_connection_section(self, parent):
         """Create the connection panel with device selection and status widgets.
