@@ -1,6 +1,21 @@
-# Firmware (Raspberry Pi Pico / MicroPython)
+<p align="center">
+  <img src="../docs/pictures/tripico_logo_firmware.png" width="110" alt="TriPico Firmware Logo"/>
+</p>
 
-This folder contains the firmware that runs on the Raspberry Pi Pico board.
+<h1 align="center">Firmware Guide</h1>
+<p align="center"><strong>Raspberry Pi Pico + MicroPython</strong></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Board-RP2040%20Pico-CC0000?style=for-the-badge&logo=raspberrypi&logoColor=white" alt="Board Badge"/>
+  <img src="https://img.shields.io/badge/Language-MicroPython-2B2728?style=for-the-badge&logo=micropython&logoColor=white" alt="Language Badge"/>
+  <img src="https://img.shields.io/badge/Core-Asyncio%20Control%20Loop-0F766E?style=for-the-badge" alt="Core Badge"/>
+</p>
+
+# 🔧 Firmware (Raspberry Pi Pico / MicroPython)
+
+> Complete control loop and measurement streaming for the Raspberry Pi Pico board.
+
+This firmware orchestrates the core device behavior: 3-channel regulation, continuous measurement through INA3221 sensors, safety relay management, and serial communication with the host computer.
 
 ## Picture Insertion Block: Firmware Context
 
@@ -8,7 +23,7 @@ This folder contains the firmware that runs on the Raspberry Pi Pico board.
 ![Pico firmware context](../docs/pictures/fw_pico_board_context.jpg)
 ```
 
-It handles:
+Specifically, it handles:
 
 - 3-channel regulation (voltage or current mode)
 - Voltage/current measurements through INA3221 devices
@@ -16,7 +31,7 @@ It handles:
 - Front-panel switch monitoring
 - Serial communication with the host computer
 
-## Files Overview
+## 📋 Files Overview
 
 - main.py
   - Async entry point and task orchestration
@@ -33,7 +48,7 @@ It handles:
 - ina3221.py
   - INA3221 MicroPython driver used for bus voltage and shunt current readings
 
-## Hardware Mapping (From Firmware Perspective)
+## 🔌 Hardware Mapping (From Firmware Perspective)
 
 ## Picture Insertion Block: Firmware Pinout
 
@@ -50,7 +65,7 @@ It handles:
 - Safety relay re-enable button: GPIO 22
 - UART1 serial: TX GPIO 4, RX GPIO 5
 
-## Runtime Architecture
+## 🔄 Runtime Architecture
 
 ## Picture Insertion Block: Async Task Diagram
 
@@ -58,7 +73,7 @@ It handles:
 ![Firmware async task flow](../docs/pictures/fw_async_tasks_flow.jpg)
 ```
 
-main.py creates asynchronous tasks for:
+The runtime consists of independent asynchronous tasks that work in parallel without blocking:
 
 - watch_user_panel_state: reads range selector and push-pull switches
 - serial_read: parses host commands
@@ -69,7 +84,7 @@ main.py creates asynchronous tasks for:
 
 Each channel dictionary stores setpoints, measurements, state, and hardware references.
 
-## Host Command Protocol
+## 📡 Host Command Protocol
 
 ## Picture Insertion Block: Serial Protocol Cheat Sheet
 

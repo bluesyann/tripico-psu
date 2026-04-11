@@ -1,6 +1,21 @@
-# Software (Host Computer)
+<p align="center">
+  <img src="../docs/pictures/tripico_logo_software.png" width="110" alt="TriPico Software Logo"/>
+</p>
 
-This folder contains everything that runs on the user computer.
+<h1 align="center">Software Guide</h1>
+<p align="center"><strong>Host PC Application (GUI + YAML Automation)</strong></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Badge"/>
+  <img src="https://img.shields.io/badge/UI-Tkinter%20%2B%20Matplotlib-7C3AED?style=for-the-badge" alt="UI Badge"/>
+  <img src="https://img.shields.io/badge/Automation-YAML%20Sweeps-0F766E?style=for-the-badge" alt="Automation Badge"/>
+</p>
+
+# 💻 Software (Host Computer)
+
+> Interactive GUI and YAML automation runner that connects over serial to the Pico firmware.
+
+This software provides two complementary modes for interacting with the hardware:
 
 ## Picture Insertion Block: Software Overview
 
@@ -8,12 +23,12 @@ This folder contains everything that runs on the user computer.
 ![Host software overview](../docs/pictures/sw_overview_gui_and_yaml.jpg)
 ```
 
-It provides two operating modes:
+**Two Operating Modes**:
 
 - Interactive GUI mode via tripico-psu_gui.py
 - YAML automation mode via tripico-psu_run_yaml.py
 
-## Files Overview
+## 📚 Files Overview
 
 - tripico-psu_gui.py
 	- Desktop GUI for live monitoring and manual channel control
@@ -41,7 +56,7 @@ It provides two operating modes:
 - examples/
 	- Example characterization files for transistor and source testing
 
-## Python Environment Setup
+## 🐍 Python Environment Setup
 
 ## Picture Insertion Block: Dependency Install
 
@@ -65,7 +80,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 ## Picture Insertion Block: Config File Example
 
@@ -82,7 +97,7 @@ Edit tripico-psu_config.yaml before running:
 - setup.calibration_folder: path to calibration files
 - gui.*: GUI size/colors/sampling/time-window defaults
 
-## Run The GUI
+## 🖥️ Run The GUI (Interactive Mode)
 
 ## Picture Insertion Block: GUI Main Window
 
@@ -115,7 +130,7 @@ Expected channel status messages include:
 ![GUI channel states example](../docs/pictures/sw_gui_channel_states.jpg)
 ```
 
-## Run YAML Characterization
+## 📈 Run YAML Characterization (Automation Mode)
 
 ## Picture Insertion Block: YAML Runner In Terminal
 

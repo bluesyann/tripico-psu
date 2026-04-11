@@ -1,6 +1,21 @@
-# Hardware Build Guide
+<p align="center">
+  <img src="../docs/pictures/tripico_logo_hardware.png" width="110" alt="TriPico Hardware Logo"/>
+</p>
 
-This folder contains the hardware design assets for TriPico PSU:
+<h1 align="center">Hardware Build Guide</h1>
+<p align="center"><strong>PCB + Front Panel + Wiring Integration</strong></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Design-KiCad-314CB6?style=for-the-badge&logo=kicad&logoColor=white" alt="KiCad Badge"/>
+  <img src="https://img.shields.io/badge/Mechanical-Panel%20%26%20Enclosure-92400E?style=for-the-badge" alt="Mechanical Badge"/>
+  <img src="https://img.shields.io/badge/Assembly-Prototype%20to%20Bench-065F46?style=for-the-badge" alt="Assembly Badge"/>
+</p>
+
+# 🏗️ Hardware Build Guide
+
+> PCB design, front-panel enclosure, mechanical integration, and electrical bring-up.
+
+This guide covers the complete hardware design and assembly workflow:
 
 ## Picture Insertion Block: Hardware Assembly Overview
 
@@ -8,12 +23,12 @@ This folder contains the hardware design assets for TriPico PSU:
 ![Hardware assembly overview](../docs/pictures/hw_overview_assembly.jpg)
 ```
 
-- KiCad project (schematic + PCB)
-- Front panel enclosure files (SVG + OpenSCAD)
+- **KiCad project** (complete schematic + PCB layout)
+- **Front panel enclosure files** (SVG vector artwork + OpenSCAD 3D extrusion script)
 
-This guide is intentionally conservative where repository details are incomplete.
+This guide is intentionally conservative where assembly details depend on your specific choices (connectors, wiring gauge, fuse ratings, etc.).
 
-## What Is In This Folder
+## 📋 What Is In This Folder
 
 ## Picture Insertion Block: Repository Hardware Assets
 
@@ -31,7 +46,7 @@ This guide is intentionally conservative where repository details are incomplete
   - front_panel_polygon.svg: panel path used for extrusion
   - front_panel.scad: OpenSCAD extrusion script
 
-## Suggested Physical Architecture
+## 🎯 Suggested Physical Architecture
 
 ## Picture Insertion Block: Front Panel Layout
 
@@ -52,7 +67,7 @@ Based on the files and pictures, the build appears to include:
 
 Use the schematic and PCB net labels as the source of truth for wiring.
 
-## Build Workflow
+## 🔨 Build Workflow
 
 ### 1) PCB Fabrication And Assembly
 
@@ -109,7 +124,7 @@ linear_extrude(height = 0.5) import("front_panel_polygon.svg");
 3. Verify rails, relay behavior, and panel switch detection.
 4. Flash firmware and test serial communication with host software.
 
-## Wiring Checklist (To Complete)
+## ✅ Wiring Checklist (To Complete)
 
 ## Picture Insertion Block: Final Wiring Diagram
 
@@ -127,7 +142,7 @@ Use this section as your own integration checklist:
 - Safety relay coil and contact wiring: TODO
 - Fuse/protection devices and ratings: TODO
 
-## Safety Notes
+## ⚠️ Safety Notes
 
 - Use an inline fuse on the external supply input.
 - Keep high-current traces/wires short and appropriately sized.

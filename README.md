@@ -1,16 +1,39 @@
-# TriPico PSU
+<p align="center">
+	<img src="docs/pictures/tripico_logo.png" width="130" alt="TriPico PSU Logo"/>
+</p>
 
-TriPico PSU is a 3-channel Raspberry Pi Pico based instrument that can be used as:
+<h1 align="center">TriPico PSU</h1>
 
-- A programmable multi-channel power supply
-- A live voltmeter/ammeter front end with real-time plots
-- A curve tracer driven by YAML characterization recipes
+<p align="center">
+	<img src="https://img.shields.io/badge/Hardware-Raspberry%20Pi%20Pico-CC0000?style=for-the-badge&logo=raspberrypi&logoColor=white" alt="Hardware Badge"/>
+	<img src="https://img.shields.io/badge/Firmware-MicroPython-2B2728?style=for-the-badge&logo=micropython&logoColor=white" alt="Firmware Badge"/>
+	<img src="https://img.shields.io/badge/Software-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Software Badge"/>
+	<img src="https://img.shields.io/badge/Use%20Cases-Power%20Supply%20%7C%20Meter%20%7C%20Curve%20Tracer-0F766E?style=for-the-badge" alt="Use Cases Badge"/>
+</p>
 
-The project is split into three parts:
+<p align="center">
+	<a href="hardware/README.md"><img src="https://img.shields.io/badge/Hardware%20Guide-Open-4C1D95?style=flat-square" alt="Hardware Guide"/></a>
+	<a href="firmware/README.md"><img src="https://img.shields.io/badge/Firmware%20Guide-Open-1D4ED8?style=flat-square" alt="Firmware Guide"/></a>
+	<a href="software/README.md"><img src="https://img.shields.io/badge/Software%20Guide-Open-15803D?style=flat-square" alt="Software Guide"/></a>
+</p>
 
-- Hardware: PCB, enclosure panel, and wiring assets in [hardware/README.md](hardware/README.md)
-- Firmware (Pico): MicroPython control loop in [firmware/README.md](firmware/README.md)
-- Software (PC): GUI and YAML runner in [software/README.md](software/README.md)
+> A 3-channel Raspberry Pi Pico instrument that works as a programmable power supply, bench voltmeter/ammeter, and YAML-driven curve tracer all in one.
+
+---
+
+## ⚡ What Is This?
+
+TriPico PSU is a 3-channel instrument built around a Raspberry Pi Pico and dual INA3221 measurement ICs. It can be configured as:
+
+- **Programmable multi-channel power supply** — independent voltage/current regulation on 3 channels with max power limits
+- **Live voltmeter/ammeter front end** — real-time monitoring with interactive desktop GUI and live charts
+- **Curve tracer** — automated characterization of transistors, diodes, and components using YAML recipe automation
+
+### Repository Structure
+
+- **[hardware/README.md](hardware/README.md)** — PCB schematic, PCB layout, front-panel design, and wiring integration
+- **[firmware/README.md](firmware/README.md)** — Raspberry Pi Pico firmware (MicroPython async control loop)
+- **[software/README.md](software/README.md)** — Host computer application (interactive GUI + YAML automation)
 
 <img src="docs/pictures/global_view.jpg" width="700"/>
 
@@ -22,15 +45,18 @@ Use this block when you have a cleaner hero photo than global_view.jpg.
 ![TriPico PSU - complete build](docs/pictures/overview_complete_build.jpg)
 ```
 
-## What The System Does
+---
 
-The Pico firmware regulates 3 channels, reads voltage/current through INA3221 sensors, and streams measurements over serial. On the computer side, you can:
+## 🎯 How It Works
 
-- Use a live GUI for interactive control and monitoring
-- Run scripted sweeps/static tests from YAML files
-- Save CSV data and generate plots for analysis
+The Pico firmware regulates 3 channels independently, continuously reads voltage/current through dual INA3221 sensors, and streams measurements over serial at 115200 baud. On the computer side, you have two modes:
 
-## Build And Run (Step By Step)
+- **Interactive GUI mode** — real-time control and monitoring with live voltage/current charts
+- **YAML automation mode** — scripted sweeps, static test runs, CSV export, and optional plots
+
+---
+
+## 🚀 Build And Run (Step By Step)
 
 ### 1) Build The Hardware
 
@@ -102,7 +128,9 @@ Add one screenshot with the GUI connected and channels active.
 	- Run software/tripico-psu_run_yaml.py with one YAML recipe from software/examples
 	- Capture sweeps/static runs to CSV and optional plots
 
-## Typical Practical Uses
+---
+
+## 📊 Typical Practical Uses
 
 ### Standalone power supply behavior
 
